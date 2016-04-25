@@ -1,0 +1,15 @@
+{
+  "name": "WebEngineering",
+  "description": "",
+  "main": "app.js",
+  "authors": [
+    "Florian Kaefer & David Volz"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "dependencies": {
+    "bootstrap": "^3.3.6",
+    "angular": "^1.5.5",
+    "font-awesome": "^4.6.1"
+  }
+}

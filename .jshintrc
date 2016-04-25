@@ -1,0 +1,15 @@
+{
+  "eqeqeq": true,
+  "latedef": true,
+  "curly": true,
+  "immed": true,
+  "newcap": true,
+  "noarg": true,
+  "sub": true,
+  "boss": true,
+  "eqnull": true,
+  "globals":{
+    "require": false
+
+  }
+}
