@@ -4,9 +4,20 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
+var mongoose = require('mongoose');
 var routes = require('./routes/index');
 var users = require('./routes/users');
+
+mongoose.connect('mongodb://localhost:27017/db');
+var db = mongoose.connection;
+mongoose.connection.on('open', function (ref) {
+  console.log('Connected to mongo server.');
+});
+
+mongoose.connection.on('error', function (err) {
+  console.log('Could not connect to mongo server!');
+  console.log(err);
+});
 
 var app = express();
 
@@ -43,6 +54,14 @@ if (app.get('env') === 'development') {
     });
   });
 }
+
+app.get('/', function (req, res) {
+  res.send('hello world');
+});
+
+app.post('/', function (req, res) {
+
+});
 
 // production error handler
 // no stacktraces leaked to user
