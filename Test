@@ -1,0 +1,34 @@
+    func setupSearchableContent() {
+        var searchableItems = [CSSearchableItem]()
+        
+        for (i, _) in titles.enumerate() {
+            let title = titles[i]
+            
+            let searchableItemAttributeSet = CSSearchableItemAttributeSet(itemContentType: kUTTypeText as String)
+            
+            searchableItemAttributeSet.title = title.valueForKey("name") as? String
+            
+            searchableItemAttributeSet.contentDescription = title.valueForKey("desc") as? String
+            
+            let uniqueIdentifier = domainIdentifier + (title.valueForKey("name")as! String)
+ 
+            let searchableItem = CSSearchableItem(uniqueIdentifier: uniqueIdentifier, domainIdentifier: domainIdentifier, attributeSet: searchableItemAttributeSet)
+            
+            searchableItems.append(searchableItem)
+        }
+        CSSearchableIndex.defaultSearchableIndex().indexSearchableItems(searchableItems) { (error) -> Void in
+            if error != nil {
+                print(error?.localizedDescription)
+            }
+        }
+    }
+    func unindexTitle(title: NSManagedObject){
+        let uniqueIdentifier = domainIdentifier + (title.valueForKey("name")as! String)
+        CSSearchableIndex.defaultSearchableIndex().deleteSearchableItemsWithIdentifiers([uniqueIdentifier]) { (error: NSError?) -> Void in
+            if let error = error {
+                print("Deindexing error: \(error.localizedDescription)")
+            } else {
+                print("Search item successfully removed!")
+            }
+        }
+    }
