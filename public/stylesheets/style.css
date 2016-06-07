@@ -15,12 +15,14 @@ html body {
 }
 
 html body #content {
+  padding: 15px;
   position: absolute;
   top: 150px;
   bottom: 75px;
   right: 10%;
   left: 10%;
-  overflow-y: scroll;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 a {
@@ -56,4 +58,9 @@ footer {
 
 .container {
   width: 90%;
+}
+
+.thread {
+  margin: auto;
+
 }

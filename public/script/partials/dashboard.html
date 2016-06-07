@@ -1,11 +1,25 @@
-<div ng-repeat="Thread in allThreads" class="row">
-    <div class="col-sm-4">
-        <p>{{Thread.title}}</p>
-    </div>
-    <div class="col-sm-4">
-        <p>{{Thread._id}}</p>
-    </div>
-    <div class="col-sm-4">
-        <p>{{Thread.author}}</p>
-    </div>
+<div ng-repeat="Thread in allThreads" class="thread">
+    <a ui-sref="thread({threadId: Thread._id})">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">{{Thread.title}}</h3>
+                <span class="badge">0{{Thread.comments}}</span>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-sm-12 hidden-xs">
+                        <p>{{Thread.content}}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6 col-xs-12">
+                        <p>Author: {{Thread.author}}</p>
+                    </div>
+                    <div class="col-sm-6 hidden-xs">
+                        <p>Time: {{Thread.dateCreated}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </a>
 </div>

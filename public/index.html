@@ -13,7 +13,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.18/angular-ui-router.min.js"></script>
 
     <script type="text/javascript" src="script/angularApp.js"></script>
-    <script type="text/javascript" src="script/controller/dashboardCtrls.js"></script>
+    <script type="text/javascript" src="script/controller/contentCtrls.js"></script>
     <script type="text/javascript" src="script/controller/footerCtrls.js"></script>
 
     <script type="text/javascript" src="script/services/threadServices.js"></script>
@@ -22,19 +22,19 @@
 </head>
 <body ng-app="forumApp" class="container">
 
-    <header class="header" class="jumbotron">
-        <div class="header">
-            <h1>Sticky Header</h1>
-        </div>
+    <header>
+        <h1>
+            Sticky Header
+        </h1>
     </header>
 
     <div id="content">
         <div ui-view="content"></div>
     </div>
 
-    <footer class="footer" ng-controller="footerCtrl">
-        <div class="footer">
-            <button ng-click="newThread()">Add</button>
+    <footer ng-controller="footerCtrl">
+        <div>
+            <button ng-click="btnEvent()"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
             <p>Place sticky footer content here.</p>
         </div>
     </footer>

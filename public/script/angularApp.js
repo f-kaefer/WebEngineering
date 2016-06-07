@@ -1,4 +1,4 @@
-var app = angular.module('forumApp', ['footerCtrls', 'dashboardCtrls', 'threadServices', 'ui.router']);
+var app = angular.module('forumApp', ['footerCtrls', 'contentCtrls', 'threadServices', 'ui.router']);
 
 app.config(function ($stateProvider, $urlRouterProvider) {
   //
@@ -13,7 +13,16 @@ app.config(function ($stateProvider, $urlRouterProvider) {
       views: {
         content: {
           templateUrl: '/script/partials/dashboard.html',
-          controller:  'contentCtrl',
+          controller:  'dashboardCtrl',
+        },
+      },
+    })
+    .state('thread', {
+      url: '/thread/:threadId',
+      views: {
+        content: {
+          templateUrl: '/script/partials/thread.html',
+          controller:  'threadCtrl',
         },
       },
     });
