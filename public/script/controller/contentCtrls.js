@@ -16,7 +16,23 @@ contentCtrls.controller('dashboardCtrl', ['$scope', 'ThreadService', function($s
 }]);
 
 contentCtrls.controller('threadCtrl', ['$scope', 'ThreadService', function($scope, ThreadService) {
+  $scope.newComment = function(){
+    ThreadService.postNewComment({
+      "author":   "Hans Dieter",
+      "threadId": "57569ea52d7094ec2aa6e8c3",
+      "content":  "Wasser drauf!"
+    });
+  }
+
+  $scope.newComment();
+
   ThreadService.getAllComments().then(function (data) {
-    $scope.allComments = data;
+    var comments = [];
+    for (comment in data) {
+      if (comment.threadId === $scope.currentThread) {
+        comments.add(comment);
+      }
+    }
+    $scope.allComments = comments;
   });
 }]);

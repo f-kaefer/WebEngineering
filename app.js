@@ -123,7 +123,7 @@ app.get('/thread/:id', function (req, res) {
 
 //GET allComments
 app.get('/allComments', function (req, res) {
-  Comments.find({}, function (err, databaseResponseComments) {
+  Comment.find({}, function (err, databaseResponseComments) {
     if (err) {
       res.statusCode = 500;
       console.log(err);

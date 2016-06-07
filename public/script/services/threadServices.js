@@ -1,4 +1,5 @@
 var threadServices = angular.module('threadServices', []);
+
 threadServices.factory('ThreadService', ['$http', function ($http) {
   var threadService = {};
 
@@ -21,7 +22,10 @@ threadServices.factory('ThreadService', ['$http', function ($http) {
       return null;
     });
   };
-  
+
+  threadService.postNewComment = function (data) {
+    $http.post('/thread', data);
+  }
 
   return threadService;
 }]);

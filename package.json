@@ -21,7 +21,6 @@
     "grunt-contrib-clean": "~1.0.0",
     "grunt-contrib-copy": "~1.0.0",
     "grunt-contrib-jshint": "~1.0.0",
-    "grunt-jscs": "~2.8.0",
-    "nodemon": "^1.9.1"
+    "grunt-jscs": "~2.8.0"
   }
 }

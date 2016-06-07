@@ -7,6 +7,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
 
   //
   // Now set up the states
+
   $stateProvider
     .state('dashboard', {
       url: '/dashboard',
@@ -27,3 +28,5 @@ app.config(function ($stateProvider, $urlRouterProvider) {
       },
     });
 });
+
+app.controller('stateCtrl', ['$scope', ]);
