@@ -1,4 +1,4 @@
-### Thread
+### Category
 ```JSON
 {
 	"title":	"Hilfe Katze kaputt",
