@@ -21,7 +21,7 @@ var categorySchema = mongoose.Schema({
   title: String,
   content: String,
   dateCreated: { default: Date.now(), type: Date },
-  threads: Number,
+  threads: { default: 0, type: Number },
 });
 
 var threadSchema = mongoose.Schema({
@@ -30,7 +30,7 @@ var threadSchema = mongoose.Schema({
   categoryId: Number,
   content: String,
   dateCreated: { default: Date.now(), type: Date },
-  comments: Number,
+  comments: { default: 0, type: Number },
 });
 
 var commentSchema = mongoose.Schema({
@@ -150,7 +150,6 @@ app.post('/thread', function (req, res) {
   var newThread = new Thread({
     title: req.body.title,
     content: req.body.content,
-    categoryId: req.body.threadId,
     author: req.body.author,
     date: Date.now(),
     comments: req.body.comments,
