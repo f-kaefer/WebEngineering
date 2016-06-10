@@ -1,0 +1,27 @@
+mongod --dbpath data/db (mongo Server starten)
+
+
+
+//MongoShell --> 3. Bash (Database resetten, Collections anschauen, Datenbank restarten ,Datenbank kontrollieren)
+kaferf@KAFERF2 MINGW64 ~/WebstormProjects/WebEngineering (master)
+$ ls
+app.js  commands.txt  Gruntfile.js   package.json  README.md  Test
+bin/    data/         node_modules/  public/       routes/
+
+kaferf@KAFERF2 MINGW64 ~/WebstormProjects/WebEngineering (master)
+$ cd bin/
+
+kaferf@KAFERF2 MINGW64 ~/WebstormProjects/WebEngineering/bin (master)
+$ ./mongo
+MongoDB shell version: 3.2.5
+connecting to: test
+show dbs
+local  0.000GB
+use local
+switched to db local
+show collections
+startup_log
+threads
+db.threads.find()
+{ "_id" : ObjectId("5723b6689ab8686021604ba1"), "title" : "Katze is kaputt", "content" : "Katze geht nicht mehr, was soll ich tun?", "dateCreated" : ISODate("2016-04-29T19:30:45.362Z"), "__v" : 0 }
+

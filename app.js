@@ -54,6 +54,9 @@ app.post('/thread', function (req, res) {
   var newThread = new Thread({
     title: req.body.title,
     content: req.body.content,
+    author: req.body.author,
+    date: Date.now(),
+    comments: req.body.comments,
   });
   console.log('TRIED TO POST DATA');
 
@@ -72,25 +75,26 @@ app.post('/thread', function (req, res) {
 });
 
 //update Thread
-/*app.put('/api/products/:id', function (req, res){
+app.put('/thread/:id', function (req, res) {
   return Thread.findById(req.params.id, function (err, thread) {
-    product.title = req.body.title;
-    product.description = req.body.description;
-    product.style = req.body.style;
-    return product.save(function (err) {
+    thread.title = req.body.title;
+    thread.content = req.body.content;
+    thread.date = Date.now();
+    thread.comments = req.body.comments;
+    return thread.save(function (err) {
       if (!err) {
-        console.log("updated");
+        console.log('Thread has been updated');
       } else {
         console.log(err);
       }
+
       return res.send(thread);
     });
   });
 });
-*/
 
 //getAllThreads
-app.get('/allThreads', function (req, res) {
+app.get('/threadlist', function (req, res) {
   Thread.find({}, function (err, threads) {
     if (err) {
       res.statusCode = 500;
@@ -119,10 +123,22 @@ app.get('/thread/:id', function (req, res) {
   });
 });
 
+//delete thread
+app.delete('/thread/:id', function (req, res) {
+  Thread.findOneAndRemove({ _id: req.params.id }, function (err)  {
+    if (!err) {
+      console.log('Thread removed');
+      return res.send('');
+    } else {
+      console.log(err);
+    }
+  });
+});
+
 //Comments
 
 //GET allComments
-app.get('/allComments', function (req, res) {
+app.get('/commentlist', function (req, res) {
   Comment.find({}, function (err, databaseResponseComments) {
     if (err) {
       res.statusCode = 500;
@@ -151,16 +167,35 @@ app.get('/comment/:id', function (req, res) {
   });
 });
 
+//update comment
+app.put('/comment/:id', function (req, res) {
+  return Comment.findById(req.params.id, function (err, comment) {
+    comment.content = req.body.content;
+    comment.date = Date.now();
+    return comment.save(function (err) {
+      if (!err) {
+        console.log('Comment has been updated');
+      } else {
+        console.log(err);
+      }
+
+      return res.send(comment);
+    });
+  });
+});
+
 //post newComment
 app.post('/comment', function (req, res) {
   var newComment = new Comment({
     author: req.body.author,
     threadId: req.body.threadId,
     content: req.body.content,
+    date: Date.now(),
   });
 
   //Save object to database, error or success
   newComment.save(function (err, newComment) {
+    var response = {};
     if (err) {
       res.statusCode = 500;
       console.log(err);
@@ -168,7 +203,21 @@ app.post('/comment', function (req, res) {
     }else {
       res.statusCode = 200;
       console.log('Added ' + newComment + ' to Database');
-      res.send('success');
+      response.status = 'success';
+      response.comment = newComment;
+      res.json(response);
+    }
+  });
+});
+
+//delete comment
+app.delete('/comment/:id', function (req, res) {
+  Comment.findOneAndRemove({ _id: req.params.id }, function (err)  {
+    if (!err) {
+      console.log('Comment removed');
+      return res.send('');
+    } else {
+      console.log(err);
     }
   });
 });
@@ -180,7 +229,7 @@ app.use(function (req, res, next) {
   next(err);
 });
 
-app.listen(8080, function () {
+app.listen(6001, function () {
   console.log('server started on port 8080');
 });
 
