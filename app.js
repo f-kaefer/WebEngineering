@@ -44,17 +44,6 @@ var Category = mongoose.model('Category', categorySchema);
 var Thread = mongoose.model('Thread', threadSchema);
 var Comment = mongoose.model('Comment', commentSchema);
 
-categorySchema.pre('remove', function (next) {
-  Thread.remove({ category_id: this._id }).exec();
-  Comment.remove({ category_id: this._id }).exec();
-  next();
-});
-
-threadSchema.pre('remove', function (next) {
-  Comment.remove({ thread_id: this._id }).exec();
-  next();
-});
-
 var app = express();
 
 // uncomment after placing your favicon in /public
@@ -142,9 +131,17 @@ app.get('/category/:id', function (req, res) {
   });
 });
 
+/*categorySchema.pre('remove', function (next) {
+  Thread.remove({ category_id: this._id }).exec();
+  Comment.remove({ category_id: this._id }).exec();
+  next();
+});*/
+
 //delete category
 app.delete('/category/:id', function (req, res) {
   Category.findOneAndRemove({ _id: req.params.id }, function (err)  {
+    Thread.remove({ category_id: this._id }).exec();
+    Comment.remove({ category_id: this._id }).exec();
     if (!err) {
       console.log('Category removed');
       return res.send('');
@@ -231,9 +228,15 @@ app.get('/thread/:id', function (req, res) {
   });
 });
 
+/*threadSchema.pre('remove', function (next) {
+  Comment.remove({ thread_id: this._id }).exec();
+  next();
+});*/
+
 //delete thread
 app.delete('/thread/:id', function (req, res) {
   Thread.findOneAndRemove({ _id: req.params.id }, function (err)  {
+    Comment.remove({ thread_id: this._id }).exec();
     if (!err) {
       console.log('Thread removed');
       return res.send('');
