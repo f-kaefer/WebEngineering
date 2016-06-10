@@ -27,7 +27,7 @@ var categorySchema = mongoose.Schema({
 var threadSchema = mongoose.Schema({
   title: String,
   author: String,// jscs:ignore
-  categoryId: Number,
+  categoryId: String,
   content: String,
   dateCreated: { default: Date.now(), type: Date },
   comments: { default: 0, type: Number },
