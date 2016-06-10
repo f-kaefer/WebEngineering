@@ -1,28 +1,39 @@
-<header class="navbar navbar-default navbar-fixed-top">
-    <div class="container">
-        <p>
+<div>
+    <div id="content">
+        <header class="navbar navbar-default navbar-fixed-top">
+            <div class="container">
+                <h3>
+                    {{current.thread.title}}
+                </h3>
+                {{current.thread.content}}
+                <ol class="breadcrumb">
+                    <li><a ui-sref="dashboard">Dashboard</a></li>
+                    <li><a ui-sref="category({categoryId: current.category._id})">{{current.category.title}}</a></li>
+                    <li class="active">{{current.thread.title}}</li>
+                </ol>
+            </div>
+        </header>
+        <header class="navbar" style="visibility: hidden">
             <h3>
                 {{current.thread.title}}
             </h3>
-                {{current.thread.content}}
+            {{current.thread.content}}
             <ol class="breadcrumb">
                 <li><a ui-sref="dashboard">Dashboard</a></li>
                 <li><a ui-sref="category({categoryId: current.category._id})">{{current.category.title}}</a></li>
                 <li class="active">{{current.thread.title}}</li>
             </ol>
-        </p>
-    </div>
-</header>
-<div id="content">
-    <div ng-repeat="Comment in threadComments">
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <button type="button" class="close" ng-click="document.getElementById('usrname').setAttribute('value','{{Comment._id}}'); document.getElementById('cnt').value = Comment.content" data-toggle="modal" data-target="#myModal">&times;</button>
-                {{Comment.content}}
-            </div>
-            <div class="panel-footer">
-                <button type="button" class="close" ng-click="deleteComment(Comment._id)">&times;</button>
-                {{Comment.author}}
+        </header>
+        <div ng-repeat="Comment in threadComments">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <button type="button" class="close" ng-click="document.getElementById('usrname').setAttribute('value','{{Comment._id}}'); document.getElementById('cnt').value = Comment.content" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-pencil"></span></button>
+                    {{Comment.content}}
+                </div>
+                <div class="panel-footer">
+                    <button type="button" class="close" ng-click="deleteComment(Comment._id)"><span class="glyphicon glyphicon-remove-circle"></span></button>
+                    {{Comment.author}}
+                </div>
             </div>
         </div>
     </div>
@@ -41,11 +52,11 @@
                     <form role="form" ng-submit="newComment(); $('#modal').modal('hide');">
                     <div class="form-group">
                         <label for="usrname"><span class="glyphicon glyphicon-user"></span> Username</label>
-                        <input ng-model="author" type="text" class="form-control" id="usrname" placeholder="Enter your name">
+                        <input ng-model="author" type="text" class="form-control" id="usrname" placeholder="Enter your name" required>
                     </div>
                     <div class="form-group">
                         <label for="cnt"><span class="glyphicon glyphicon-book"></span> Content</label>
-                        <textarea ng-model="content" class="form-control" id="cnt" placeholder="Enter your comment"></textarea>
+                        <textarea ng-model="content" class="form-control" id="cnt" placeholder="Enter your comment" required></textarea>
                     </div>
                     <button type="submit" class="btn btn-default btn-success btn-block"><span class="glyphicon glyphicon-comment"></span> Comment</button>
                 </form>

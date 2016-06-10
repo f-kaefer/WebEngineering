@@ -1,6 +1,7 @@
-<header class="navbar navbar-default navbar-fixed-top">
-    <div class="container">
-        <p>
+<div id="content">
+    <header class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <p>
             <h3>
                 {{current.category.title}}
             </h3>
@@ -8,21 +9,34 @@
                 <li><a ui-sref="dashboard">Dashboard</a></li>
                 <li class="active">{{current.category.title}}</li>
             </ol>
-        </p>
-    </div>
-</header>
-<div id="content">
+            </p>
+        </div>
+    </header>
+    <header class="navbar" style="visibility: hidden">
+        <div class="container">
+            <p>
+            <h3>
+                {{current.category.title}}
+            </h3>
+            <ol class="breadcrumb">
+                <li><a ui-sref="dashboard">Dashboard</a></li>
+                <li class="active">{{current.category.title}}</li>
+            </ol>
+            </p>
+        </div>
+    </header>
     <div ng-repeat="Thread in categoryThreads" class="thread">
         <a ui-sref="thread({categoryId: current.categoryId, threadId: Thread._id})">
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    <button type="button" class="close" ng-click="deleteThread(Thread._id)" >&times;</button>
+                    <button type="button" class="close" ng-click="deleteThread(Thread._id)" ><span class="glyphicon glyphicon-remove-circle"></span></button>
                     <h3 class="panel-title">{{Thread.title}}<span class="badge"> {{Thread.comments}}</span></h3>
 
                 </div>
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-sm-12 hidden-xs">
+                            <button type="button" class="close" ng-click="document.getElementById('usrname').setAttribute('value','{{Comment._id}}'); document.getElementById('cnt').value = Comment.content" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-pencil"></span></button>
                             <p>{{Thread.content}}</p>
                         </div>
                     </div>
@@ -52,15 +66,15 @@
                 <form role="form" ng-submit="newThread()">
                     <div class="form-group">
                         <label for="usrname"><span class="glyphicon glyphicon-user"></span> Username</label>
-                        <input ng-model="author" type="text" class="form-control" id="usrname" placeholder="Enter your name">
+                        <input ng-model="author" type="text" class="form-control" id="usrname" placeholder="Enter your name" required>
                     </div>
                     <div class="form-group">
                         <label for="title"><span class="glyphicon glyphicon-text-width"></span> Title</label>
-                        <input ng-model="title" type="text" class="form-control" id="title" placeholder="Title">
+                        <input ng-model="title" type="text" class="form-control" id="title" placeholder="Title" required>
                     </div>
                     <div class="form-group">
                         <label for="cnt"><span class="glyphicon glyphicon-book"></span> Content</label>
-                        <textarea ng-model="content" class="form-control" id="cnt" placeholder="Enter your comment"></textarea>
+                        <textarea ng-model="content" class="form-control" id="cnt" placeholder="Enter your comment" required></textarea>
                     </div>
                     <button type="submit" class="btn btn-default btn-success btn-block"><span class="glyphicon glyphicon-comment"></span> Open Thread</button>
                 </form>
