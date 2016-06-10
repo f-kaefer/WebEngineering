@@ -17,9 +17,17 @@ mongoose.connection.on('error', function (err) {
   console.log(err);
 });
 
+var categorySchema = mongoose.Schema({
+  title: String,
+  content: String,
+  dateCreated: { default: Date.now(), type: Date },
+  threads: Number,
+});
+
 var threadSchema = mongoose.Schema({
   title: String,
-  author: String,// jscs:ignore 
+  author: String,// jscs:ignore
+  categoryId: Number,
   content: String,
   dateCreated: { default: Date.now(), type: Date },
   comments: Number,
@@ -32,6 +40,7 @@ var commentSchema = mongoose.Schema({
   dateCreated: { default: Date.now(), type: Date },
 });
 
+var Category = mongoose.model('Category', categorySchema);
 var Thread = mongoose.model('Thread', threadSchema);
 var Comment = mongoose.model('Comment', commentSchema);
 
@@ -47,6 +56,93 @@ app.use(express.static(path.join(__dirname, 'public')));
  ****REST-API***
  ***************/
 
+//Category
+
+//post newCategory
+app.post('/category', function (req, res) {
+  var newCategory = new Category({
+    title: req.body.title,
+    categoryId: req.body.threadId,
+    date: Date.now(),
+    comments: req.body.comments,
+  });
+  console.log('TRIED TO POST DATA');
+
+  //Save object to database, error or success
+  newCategory.save(function (err, newCategory) {
+    if (err) {
+      res.statusCode = 500;
+      console.log(err);
+      res.send('err');
+    }else {
+      res.statusCode = 200;
+      console.log('Added ' + newCategory + ' to Database');
+      res.send('success');
+    }
+  });
+});
+
+//update Category
+app.put('/category/:id', function (req, res) {
+  return Category.findById(req.params.id, function (err, category) {
+    category.title = req.body.title;
+    category.content = req.body.content;
+    category.date = Date.now();
+    category.comments = req.body.comments;
+    return category.save(function (err) {
+      if (!err) {
+        console.log('Category has been updated');
+      } else {
+        console.log(err);
+      }
+
+      return res.send(category);
+    });
+  });
+});
+
+//getAllCategories
+app.get('/categorylist', function (req, res) {
+  Category.find({}, function (err, category) {
+    if (err) {
+      res.statusCode = 500;
+      console.log(err);
+      res.send('err');
+    }else {
+      res.statusCode = 200;
+      console.log('Successfully send all data');
+      res.json(category);
+    }
+  });
+});
+
+//GET specificCategory
+app.get('/category/:id', function (req, res) {
+  Category.find({ _id: req.params.id }, function (err, category) {
+    if (err) {
+      res.statusCode = 500;
+      console.log(err);
+      res.send('err');
+    }else {
+      res.statusCode = 200;
+      console.log('Successfully send specific category');
+      res.json(category);
+    }
+  });
+});
+
+//delete category
+app.delete('/category/:id', function (req, res) {
+  Category.findOneAndRemove({ _id: req.params.id }, function (err)  {
+    if (!err) {
+      console.log('Category removed');
+      return res.send('');
+    } else {
+      console.log(err);
+    }
+  });
+});
+
 //Thread
 
 //post newThread
@@ -54,6 +150,7 @@ app.post('/thread', function (req, res) {
   var newThread = new Thread({
     title: req.body.title,
     content: req.body.content,
+    categoryId: req.body.threadId,
     author: req.body.author,
     date: Date.now(),
     comments: req.body.comments,

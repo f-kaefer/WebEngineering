@@ -1,3 +1,12 @@
+### Category
+```JSON
+{
+	"title":	"Hilfe Katze kaputt",
+	"id": 		"1",
+	"date":		"01.05.2016",
+	"threads":	"1"
+}
+```
 ### Thread
 ```JSON
 {
@@ -7,6 +16,7 @@
 	"content":	"liegt nur noch rum, was kann ich tun?",
 	"date":		"01.05.2016",
 	"comments":	"1"
+	"categoryId":	"12345"
 }
 ```
 ### Comment
