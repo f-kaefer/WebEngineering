@@ -1,3 +1,51 @@
-<div ng-repeat="Comment in Comments">
+<header>
+    <h1>
+        {{current.thread.content}}
+    </h1>
+    <ol class="breadcrumb">
+        <li><a ui-sref="dashboard">Dashboard</a></li>
+        <li class="active">{{current.thread.title}}{{current.thread}}{{current}}</li>
+    </ol>
+</header>
+<div id="content">
+    <div ng-repeat="Comment in threadComments">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                {{Comment.content}}
+            </div>
+            <div class="panel-footer">
+                {{Comment.author}}
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
 
+        <!-- Modal content-->
+        <div id="modal" class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Create Comment</h4>
+            </div>
+            <div class="modal-body">
+                    <form role="form" ng-submit="newComment()">
+                    <div class="form-group">
+                        <label for="usrname"><span class="glyphicon glyphicon-user"></span> Username</label>
+                        <input ng-model="author" type="text" class="form-control" id="usrname" placeholder="Enter your name">
+                    </div>
+                    <div class="form-group">
+                        <label for="cnt"><span class="glyphicon glyphicon-book"></span> Content</label>
+                        <textarea ng-model="content" class="form-control" id="cnt" placeholder="Enter your comment"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-default btn-success btn-block"><span class="glyphicon glyphicon-comment"></span> Comment</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
 </div>

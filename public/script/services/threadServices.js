@@ -10,6 +10,15 @@ threadServices.factory('ThreadService', ['$http', function ($http) {
       return null;
     });
   };
+
+  threadService.getThread = function (threadId) {
+    return $http.get('/thread/' + threadId).then(function successCallback(response) {
+      console.log(response.data[0]);
+      return response.data[0];
+    },function errorCallback(response){
+      return null;
+    });
+  };
   
   threadService.postNewThread = function (data) {
     $http.post('/thread', data);
@@ -24,7 +33,7 @@ threadServices.factory('ThreadService', ['$http', function ($http) {
   };
 
   threadService.postNewComment = function (data) {
-    $http.post('/thread', data);
+    $http.post('/comment', data);
   }
 
   return threadService;
