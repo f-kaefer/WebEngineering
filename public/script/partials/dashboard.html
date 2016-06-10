@@ -1,25 +1,65 @@
-<div ng-repeat="Thread in allThreads" class="thread">
-    <a ui-sref="thread({threadId: Thread._id})">
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                <h3 class="panel-title">{{Thread.title}}</h3>
-                <span class="badge">0{{Thread.comments}}</span>
+<header>
+    <h1>
+        Welcome to the Forum!
+    </h1>
+</header>
+<div id="content">
+    <div ng-repeat="Thread in allThreads" class="thread">
+        <a ui-sref="thread({threadId: Thread._id})">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">{{Thread.title}}<span class="badge">0{{Thread.comments}}</span></h3>
+
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-sm-12 hidden-xs">
+                            <p>{{Thread.content}}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6 col-xs-12">
+                            <p>Author: {{Thread.author}}</p>
+                        </div>
+                        <div class="col-sm-6 hidden-xs">
+                            <p>Time: {{Thread.dateCreated}}</p>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="panel-body">
-                <div class="row">
-                    <div class="col-sm-12 hidden-xs">
-                        <p>{{Thread.content}}</p>
+        </a>
+    </div>
+</div>
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div id="modal" class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Create Thread</h4>
+            </div>
+            <div class="modal-body">
+                <form role="form" ng-submit="newThread()">
+                    <div class="form-group">
+                        <label for="usrname"><span class="glyphicon glyphicon-user"></span> Username</label>
+                        <input ng-model="author" type="text" class="form-control" id="usrname" placeholder="Enter your name">
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-6 col-xs-12">
-                        <p>Author: {{Thread.author}}</p>
+                    <div class="form-group">
+                        <label for="title"><span class="glyphicon glyphicon-text-width"></span> Title</label>
+                        <input ng-model="title" type="text" class="form-control" id="title" placeholder="Title">
                     </div>
-                    <div class="col-sm-6 hidden-xs">
-                        <p>Time: {{Thread.dateCreated}}</p>
+                    <div class="form-group">
+                        <label for="cnt"><span class="glyphicon glyphicon-book"></span> Content</label>
+                        <textarea ng-model="content" class="form-control" id="cnt" placeholder="Enter your comment"></textarea>
                     </div>
-                </div>
+                    <button type="submit" class="btn btn-default btn-success btn-block"><span class="glyphicon glyphicon-comment"></span> Open Thread</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div>
-    </a>
+
+    </div>
 </div>

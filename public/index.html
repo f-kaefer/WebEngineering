@@ -20,22 +20,14 @@
 
 
 </head>
-<body ng-app="forumApp" class="container">
+<body ng-app="forumApp" class="container" ng-controller="appCtrl">
 
-    <header>
-        <h1>
-            Sticky Header
-        </h1>
-    </header>
+    <div ui-view="content"></div>
 
-    <div id="content">
-        <div ui-view="content"></div>
-    </div>
-
-    <footer ng-controller="footerCtrl">
+    <!-- <footer ng-controller="footerCtrl"> -->
+    <footer>
         <div>
-            <button ng-click="btnEvent()"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
-            <p>Place sticky footer content here.</p>
+            <button data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
         </div>
     </footer>
 </body>

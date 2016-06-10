@@ -3,7 +3,22 @@ var footerCtrls = angular.module('footerCtrls', []);
 footerCtrls.controller('footerCtrl', ['$scope', 'ThreadService', '$location', function($scope, ThreadService, $location) {
 
   $scope.btnEvent = function() {
-    url = $location.path();
+
+    if ($scope.state.state === 'dahsboard') {
+      ThreadService.postNewThread({
+        'title': 'Hilfe Katze kaputt',
+        'author': 'Hans Peter',
+        'content': 'liegt nur noch rum, was kann ich tun?',
+      });
+    } else if ($scope.state.state === 'thread') {
+      ThreadService.postNewComment({
+        'author':   'Hans Dieter',
+        'threadId': $scope.state.threadId,
+        'content':  'Wasser drauf!'
+      });
+    }
+
+    /*url = $location.path();
     if (url === '/dashboard') {
       ThreadService.postNewThread({
         'title': 'Hilfe Katze kaputt',
@@ -15,7 +30,7 @@ footerCtrls.controller('footerCtrl', ['$scope', 'ThreadService', '$location', fu
       console.log(threadId);
     } else {
       console.log('unknown state');
-    }
+    }*/
   }
 
   /*app.controller("SprocketCtrl",
