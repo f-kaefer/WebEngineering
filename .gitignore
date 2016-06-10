@@ -8,3 +8,4 @@ tmp
 bin/
 data/
 commands
+bower_components/
