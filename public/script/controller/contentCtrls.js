@@ -42,5 +42,10 @@ contentCtrls.controller('threadCtrl', ['$scope', 'ThreadService', function($scop
     allComments();
   };
 
+  $scope.deleteComment = function(commentId) {
+    ThreadService.deleteComment(commentId);
+    allComments();
+  };
+
   allComments();
 }]);

@@ -34,18 +34,19 @@ app.controller('appCtrl', ['$scope', '$location', 'ThreadService', function($sco
   $scope.$on('$stateChangeSuccess', function () {
     var threadTest = /\/thread\/.+/i;
     
-    url = $location.path();
+    var url = $location.path();
     if (url == '/dashboard') {
       $scope.current = { 'state': 'dashboard'};
     } else if (threadTest.test(url)) {
-      threadId = url.slice(8);
-      thread = ThreadService.getThread(threadId);
+      var threadId = url.slice(8);
+      var thread = ThreadService.getThread(threadId);
       console.log(thread);
+      console.log(thread.$$state);
+      console.log(thread.$$state.value);
       $scope.current = { 'state': 'thread',
-        'threadId': threadId,
-        'thread': thread
+        'threadId': threadId
       };
-      //$scope.current.thread = ThreadService.getThread(threadId);
+      $scope.current.thread = ThreadService.getThread(threadId);
     } else {
       console.log("not a valid state, how did you get here?");
     }

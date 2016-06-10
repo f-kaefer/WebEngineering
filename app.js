@@ -230,7 +230,7 @@ app.use(function (req, res, next) {
 });
 
 app.listen(6001, function () {
-  console.log('server started on port 8080');
+  console.log('server started on port 6001');
 });
 
 module.exports = app;

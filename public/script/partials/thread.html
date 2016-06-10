@@ -1,4 +1,4 @@
-<header>
+<header class="jumbotron">
     <h1>
         {{current.thread.content}}
     </h1>
@@ -11,9 +11,11 @@
     <div ng-repeat="Comment in threadComments">
         <div class="panel panel-default">
             <div class="panel-body">
+                <button type="button" class="close" ng-click="document.getElementById('usrname').setAttribute('value','{{Comment._id}}'); document.getElementById('cnt').value = Comment.content" data-toggle="modal" data-target="#myModal">&times;</button>
                 {{Comment.content}}
             </div>
             <div class="panel-footer">
+                <button type="button" class="close" ng-click="deleteComment(Comment._id)">&times;</button>
                 {{Comment.author}}
             </div>
         </div>
@@ -30,7 +32,7 @@
                 <h4 class="modal-title">Create Comment</h4>
             </div>
             <div class="modal-body">
-                    <form role="form" ng-submit="newComment()">
+                    <form role="form" ng-submit="newComment(); $('#modal').modal('hide');">
                     <div class="form-group">
                         <label for="usrname"><span class="glyphicon glyphicon-user"></span> Username</label>
                         <input ng-model="author" type="text" class="form-control" id="usrname" placeholder="Enter your name">
