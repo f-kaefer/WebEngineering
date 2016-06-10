@@ -1,15 +1,17 @@
-<header class="jumbotron">
-    <p>
-    <h3>
-        {{current.thread.title}}
-    </h3>
-        {{current.thread.content}}
-    <ol class="breadcrumb">
-        <li><a ui-sref="dashboard">Dashboard</a></li>
-        <li><a ui-sref="category({categoryId: current.category._id})">{{current.category.title}}</a></li>
-        <li class="active">{{current.thread.title}}</li>
-    </ol>
-    </p>
+<header class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <p>
+            <h3>
+                {{current.thread.title}}
+            </h3>
+                {{current.thread.content}}
+            <ol class="breadcrumb">
+                <li><a ui-sref="dashboard">Dashboard</a></li>
+                <li><a ui-sref="category({categoryId: current.category._id})">{{current.category.title}}</a></li>
+                <li class="active">{{current.thread.title}}</li>
+            </ol>
+        </p>
+    </div>
 </header>
 <div id="content">
     <div ng-repeat="Comment in threadComments">

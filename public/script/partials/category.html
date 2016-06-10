@@ -1,13 +1,15 @@
-<header class="jumbotron">
-    <p>
-    <h3>
-        {{current.category.title}}
-    </h3>
-    <ol class="breadcrumb">
-        <li><a ui-sref="dashboard">Dashboard</a></li>
-        <li class="active">{{current.category.title}}</li>
-    </ol>
-    </p>
+<header class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <p>
+            <h3>
+                {{current.category.title}}
+            </h3>
+            <ol class="breadcrumb">
+                <li><a ui-sref="dashboard">Dashboard</a></li>
+                <li class="active">{{current.category.title}}</li>
+            </ol>
+        </p>
+    </div>
 </header>
 <div id="content">
     <div ng-repeat="Thread in categoryThreads" class="thread">
