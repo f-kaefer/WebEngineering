@@ -44,6 +44,17 @@ var Category = mongoose.model('Category', categorySchema);
 var Thread = mongoose.model('Thread', threadSchema);
 var Comment = mongoose.model('Comment', commentSchema);
 
+categorySchema.pre('remove', function (next) {
+  Thread.remove({ category_id: this._id }).exec();
+  Comment.remove({ category_id: this._id }).exec();
+  next();
+});
+
+threadSchema.pre('remove', function (next) {
+  Comment.remove({ thread_id: this._id }).exec();
+  next();
+});
+
 var app = express();
 
 // uncomment after placing your favicon in /public
