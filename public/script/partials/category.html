@@ -10,12 +10,12 @@
     </p>
 </header>
 <div id="content">
-    <div ng-repeat="Thread in allThreads" class="thread">
-        <a ui-sref="thread({threadId: Thread._id})">
+    <div ng-repeat="Thread in categoryThreads" class="thread">
+        <a ui-sref="thread({categoryId: current.categoryId, threadId: Thread._id})">
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <button type="button" class="close" ng-click="deleteThread(Thread._id)" >&times;</button>
-                    <h3 class="panel-title">{{Thread.title}}<span class="badge">0{{Thread.comments}}</span></h3>
+                    <h3 class="panel-title">{{Thread.title}}<span class="badge"> {{Thread.comments}}</span></h3>
 
                 </div>
                 <div class="panel-body">

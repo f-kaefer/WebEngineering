@@ -49,30 +49,32 @@ app.config(function ($stateProvider, $urlRouterProvider) {
   $scope.$on('$stateChangeSuccess', function () {
     var threadTest = /\/thread\/.+/i;
     var categoryTest = /\/category\/.+/i;
-
-    console.log($stateParams);
-
+    
     var url = $location.path();
     if (url == '/dashboard') {
       $scope.current = { 'state': 'dashboard'};
-    } else if (threadTest.test(url)) {
-      var threadId = url.split('/')[4];
-      ThreadService.getThread(threadId).then(function(thread){
-        $scope.current = { 'state': 'thread',
-          'threadId': threadId,
-          'thread': thread
-        };
-      });
     } else if (categoryTest.test(url)) {
-      var categoryId = url.split('/')[2];
-      ThreadService.getCategory(categoryId).then(function(category){
-        $scope.current = { 'state': 'category',
-          'categoryId': categoryId,
+      ThreadService.getCategory($stateParams.categoryId).then(function (category) {
+        $scope.current = {
+          'state': 'category',
+          'categoryId': $stateParams.categoryId,
           'category': category
         };
       });
+      if(threadTest.test(url)) {
+        ThreadService.getThread($stateParams.threadId).then(function(thread) {
+          $scope.current = {
+            'state': 'thread',
+            'categoryId': $stateParams.categoryId,
+            'category': $scope.current.category,
+            'threadId': $stateParams.threadId,
+            'thread': thread
+          };
+        });
+      }
     } else {
       console.log("not a valid state, how did you get here?");
+      $location.url("/dashboard")
     }
   });
 }]);

@@ -35,7 +35,6 @@ contentCtrls.controller('categoryCtrl', ['$scope', 'ThreadService', function($sc
     ThreadService.getAllThreads().then(function (data) {
       var threads = [];
       for (thread in data) {
-        console.log(data);
         if (data[thread].categoryId === $scope.current.categoryId) {
           threads.push(data[thread]);
         }
@@ -48,7 +47,8 @@ contentCtrls.controller('categoryCtrl', ['$scope', 'ThreadService', function($sc
     ThreadService.postNewThread ({
       'author': this.author,
       'title': this.title,
-      'content': this.content
+      'content': this.content,
+      'categoryId': $scope.current.categoryId
     });
     allThreads();
   };

@@ -1,4 +1,4 @@
-<header>
+<header class="jumbotron">
     <h1>
         Welcome to the Forum!
     </h1>
@@ -9,7 +9,7 @@
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <button type="button" class="close" ng-click="deleteCategory(Category._id)" >&times;</button>
-                    <h3 class="panel-title">{{Category.title}}<span class="badge">0{{Category.threads}}</span></h3>
+                    <h3 class="panel-title">{{Category.title}}<span class="badge"> {{Category.threads}}</span></h3>
 
                 </div>
                 <div class="panel-body">
