@@ -150,6 +150,7 @@ app.post('/thread', function (req, res) {
   var newThread = new Thread({
     title: req.body.title,
     content: req.body.content,
+    categoryId: req.body.categoryId,
     author: req.body.author,
     date: Date.now(),
     comments: req.body.comments,
