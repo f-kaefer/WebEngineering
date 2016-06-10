@@ -1,11 +1,14 @@
 <header class="jumbotron">
-    <h1>
+    <p>
+    <h3>
+        {{current.thread.title}}
+    </h3>
         {{current.thread.content}}
-    </h1>
     <ol class="breadcrumb">
         <li><a ui-sref="dashboard">Dashboard</a></li>
-        <li class="active">{{current.thread.title}}{{current.thread}}{{current}}</li>
+        <li class="active">{{current.thread.title}}</li>
     </ol>
+    </p>
 </header>
 <div id="content">
     <div ng-repeat="Comment in threadComments">

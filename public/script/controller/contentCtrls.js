@@ -16,6 +16,16 @@ contentCtrls.controller('dashboardCtrl', ['$scope', 'ThreadService', function($s
     });
     allThreads();
   };
+
+  $scope.deleteThread = function(threadId) {
+    ThreadService.deleteThread(threadId);
+    allThreads();
+  };
+
+  $scope.updateThread = function() {
+    console.log('To Be implemented')
+  };
+
   allThreads();
 }]);
 
@@ -45,6 +55,10 @@ contentCtrls.controller('threadCtrl', ['$scope', 'ThreadService', function($scop
   $scope.deleteComment = function(commentId) {
     ThreadService.deleteComment(commentId);
     allComments();
+  };
+
+  $scope.updateComment = function() {
+    console.log('To Be implemented')
   };
 
   allComments();

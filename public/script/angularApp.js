@@ -18,8 +18,24 @@ app.config(function ($stateProvider, $urlRouterProvider) {
         },
       },
     })
+      .state('category', {
+        url: '/category/{categoryId:[^/]*}',
+        controller: function($stateParams){
+          $stateParams.categoryId
+        },
+        views: {
+          content: {
+            templateUrl: '/script/partials/category.html',
+            controller:  'categoryCtrl',
+          },
+        },
+      })
     .state('thread', {
-      url: '/thread/:threadId',
+      url: '/category/{categoryId:[^/]*}/thread/{threadId:[^/]*}',
+      controller: function($stateParams){
+        $stateParams.categoryId
+        $stateParams.threadId
+      },
       views: {
         content: {
           templateUrl: '/script/partials/thread.html',
@@ -27,26 +43,34 @@ app.config(function ($stateProvider, $urlRouterProvider) {
         },
       },
     });
-});
-
-app.controller('appCtrl', ['$scope', '$location', 'ThreadService', function($scope, $location, ThreadService) {
+})
+.controller('appCtrl', ['$scope', '$location', 'ThreadService', '$stateParams', function($scope, $location, ThreadService, $stateParams) {
 
   $scope.$on('$stateChangeSuccess', function () {
     var threadTest = /\/thread\/.+/i;
-    
+    var categoryTest = /\/category\/.+/i;
+
+    console.log($stateParams);
+
     var url = $location.path();
     if (url == '/dashboard') {
       $scope.current = { 'state': 'dashboard'};
     } else if (threadTest.test(url)) {
-      var threadId = url.slice(8);
-      var thread = ThreadService.getThread(threadId);
-      console.log(thread);
-      console.log(thread.$$state);
-      console.log(thread.$$state.value);
-      $scope.current = { 'state': 'thread',
-        'threadId': threadId
-      };
-      $scope.current.thread = ThreadService.getThread(threadId);
+      var threadId = url.split('/')[4];
+      ThreadService.getThread(threadId).then(function(thread){
+        $scope.current = { 'state': 'thread',
+          'threadId': threadId,
+          'thread': thread
+        };
+      });
+    } else if (categoryTest.test(url)) {
+      var categoryId = url.split('/')[2];
+      ThreadService.getCategory(categoryId).then(function(category){
+        $scope.current = { 'state': 'category',
+          'categoryId': categoryId,
+          'category': category
+        };
+      });
     } else {
       console.log("not a valid state, how did you get here?");
     }
