@@ -6,7 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost:27017/local');
+mongoose.connect('mongodb://46.101.204.109:27017/GameBase');
 var db = mongoose.connection;
 mongoose.connection.on('open', function (ref) {
   console.log('Connected to mongo server.');
@@ -18,26 +18,28 @@ mongoose.connection.on('error', function (err) {
 });
 
 var categorySchema = mongoose.Schema({
-  title: String,
-  content: String,
-  dateCreated: { default: Date.now(), type: Date },
-  threads: { default: 0, type: Number },
+  title: { type: String, required: true },
+  content: { type: String, required: true },
+  dateCreated: { default: Date.now(), type: Date, required: true },
+  threads: { default: 0, type: Number, required: true },
 });
 
 var threadSchema = mongoose.Schema({
-  title: String,
-  author: String,// jscs:ignore
-  categoryId: String,
-  content: String,
-  dateCreated: { default: Date.now(), type: Date },
-  comments: { default: 0, type: Number },
+  title: { type: String, required: true },
+  author: { type: String, required: true },// jscs:ignore
+  email: { type: String, required: false },
+  categoryId: { type: String, required: true },
+  content: { type: String, required: true },
+  dateCreated: { default: Date.now(), type: Date, required: true },
+  comments: { default: 0, type: Number, required: true },
 });
 
 var commentSchema = mongoose.Schema({
-  author: String,
-  content: String,
-  threadId: String,
-  dateCreated: { default: Date.now(), type: Date },
+  author: { type: String, required: true },
+  email: { type: String, required: false },
+  content: { type: String, required: true },
+  threadId: { type: String, required: true },
+  dateCreated: { default: Date.now(), type: Date, required: true },
 });
 
 var Category = mongoose.model('Category', categorySchema);
