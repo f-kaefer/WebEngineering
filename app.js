@@ -19,9 +19,8 @@ mongoose.connection.on('error', function (err) {
 
 var categorySchema = mongoose.Schema({
   title: { type: String, required: true },
-  content: { type: String, required: true },
-  dateCreated: { default: Date.now(), type: Date, required: true },
-  threads: { default: 0, type: Number, required: true },
+  dateCreated: Date,
+  threads: { default: 0, type: Number, required: false },
 });
 
 var threadSchema = mongoose.Schema({
@@ -30,8 +29,8 @@ var threadSchema = mongoose.Schema({
   email: { type: String, required: false },
   categoryId: { type: String, required: true },
   content: { type: String, required: true },
-  dateCreated: { default: Date.now(), type: Date, required: true },
-  comments: { default: 0, type: Number, required: true },
+  dateCreated: Date,
+  comments: { default: 0, type: Number, required: false },
 });
 
 var commentSchema = mongoose.Schema({
@@ -39,7 +38,7 @@ var commentSchema = mongoose.Schema({
   email: { type: String, required: false },
   content: { type: String, required: true },
   threadId: { type: String, required: true },
-  dateCreated: { default: Date.now(), type: Date, required: true },
+  dateCreated: Date,
 });
 
 var Category = mongoose.model('Category', categorySchema);
@@ -64,8 +63,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.post('/category', function (req, res) {
   var newCategory = new Category({
     title: req.body.title,
-    categoryId: req.body.threadId,
-    date: Date.now(),
+    categoryId: req.body.categoryId,
+    dateCreated: Date.now(),
     comments: req.body.comments,
   });
   console.log('TRIED TO POST DATA');
@@ -89,7 +88,7 @@ app.put('/category/:id', function (req, res) {
   return Category.findById(req.params.id, function (err, category) {
     category.title = req.body.title;
     category.content = req.body.content;
-    category.date = Date.now();
+    category.dateCreated = Date.now();
     category.comments = req.body.comments;
     return category.save(function (err) {
       if (!err) {
@@ -133,12 +132,6 @@ app.get('/category/:id', function (req, res) {
   });
 });
 
-/*categorySchema.pre('remove', function (next) {
-  Thread.remove({ category_id: this._id }).exec();
-  Comment.remove({ category_id: this._id }).exec();
-  next();
-});*/
-
 //delete category
 app.delete('/category/:id', function (req, res) {
   Category.findOneAndRemove({ _id: req.params.id }, function (err)  {
@@ -162,10 +155,13 @@ app.post('/thread', function (req, res) {
     content: req.body.content,
     categoryId: req.body.categoryId,
     author: req.body.author,
-    date: Date.now(),
+    dateCreated: Date.now(),
     comments: req.body.comments,
   });
   console.log('TRIED TO POST DATA');
+
+  var update = {};
+  var response = {};
 
   //Save object to database, error or success
   newThread.save(function (err, newThread) {
@@ -174,9 +170,38 @@ app.post('/thread', function (req, res) {
       console.log(err);
       res.send('err');
     }else {
-      res.statusCode = 200;
-      console.log('Added ' + newThread + ' to Database');
-      res.send('success');
+
+      Category.find({ _id: req.body.categoryId }, function (err, category) {
+        if (err) {
+          console.log(err);
+          response.error = err;
+          response.statusCode = 500;
+          response.status = 'err';
+          res.json(response);
+        } else {
+          /* if no error occurs we try to update the found thread*/
+          console.log('all data from database received');
+          response.statusCode = 200;
+          if (category === null) {
+            response.status = 'no category with id: ' + req.body.categoryId;
+            response.category = category;
+            res.json(response);
+          } else {
+            response.status = 'success';
+            response.category = category;
+            update.threads = category[0].threads + 1;
+            Category.update({ _id: req.body.categoryId }, update, function (err, affected) {
+              if (err) {
+                console.log(err);
+              } else {
+                console.log('successfully updated category');
+                response.affected = affected;
+                res.json(response);
+              }
+            });
+          }
+        }
+      });
     }
   });
 });
@@ -186,7 +211,7 @@ app.put('/thread/:id', function (req, res) {
   return Thread.findById(req.params.id, function (err, thread) {
     thread.title = req.body.title;
     thread.content = req.body.content;
-    thread.date = Date.now();
+    thread.dateCreated = Date.now();
     thread.comments = req.body.comments;
     return thread.save(function (err) {
       if (!err) {
@@ -284,7 +309,7 @@ app.get('/comment/:id', function (req, res) {
 app.put('/comment/:id', function (req, res) {
   return Comment.findById(req.params.id, function (err, comment) {
     comment.content = req.body.content;
-    comment.date = Date.now();
+    comment.dateCreated = Date.now();
     return comment.save(function (err) {
       if (!err) {
         console.log('Comment has been updated');
@@ -303,8 +328,11 @@ app.post('/comment', function (req, res) {
     author: req.body.author,
     threadId: req.body.threadId,
     content: req.body.content,
-    date: Date.now(),
+    dateCreated: Date.now(),
   });
+
+  var response = {};
+  var update = {};
 
   //Save object to database, error or success
   newComment.save(function (err, newComment) {
@@ -314,11 +342,37 @@ app.post('/comment', function (req, res) {
       console.log(err);
       res.send('err');
     }else {
-      res.statusCode = 200;
-      console.log('Added ' + newComment + ' to Database');
-      response.status = 'success';
-      response.comment = newComment;
-      res.json(response);
+
+      Thread.find({ _id: req.body.threadId }, function (err, thread) {
+        if (err) {
+          console.log(err);
+          response.error = err;
+          response.statusCode = 500;
+          response.status = 'err';
+          res.json(response);
+        } else {
+          console.log('all data from database received');
+          response.statusCode = 200;
+          if (thread === null) {
+            response.status = 'no thread with id: ' + req.body.threadId;
+            response.thread = category;
+            res.json(response);
+          } else {
+            response.status = 'success';
+            response.thread = thread;
+            update.comments = thread[0].comments + 1;
+            Thread.update({ _id: req.body.threadId }, update, function (err, affected) {
+              if (err) {
+                console.log(err);
+              } else {
+                console.log('successfully updated thread');
+                response.affected = affected;
+                res.json(response);
+              }
+            });
+          }
+        }
+      });
     }
   });
 });
