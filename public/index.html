@@ -22,13 +22,25 @@
 </head>
 <body ng-app="forumApp" class="container" ng-controller="appCtrl">
 
-    <div ui-view="content"></div>
+    <div ui-view="content" id="wrap">
+        <div id="push"></div>
+    </div>
 
-    <!-- <footer ng-controller="footerCtrl"> -->
-    <footer>
-        <div>
-            <button data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+    <footer class="navbar" style="visibility: hidden">
+        <div class="container">
+            <div class="navbar-text">
+                <button data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+            </div>
         </div>
     </footer>
+
+    <footer class="navbar navbar-default navbar-fixed-bottom">
+        <div class="container">
+            <div class="navbar-text">
+                <button data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+            </div>
+        </div>
+    </footer>
+
 </body>
 </html>

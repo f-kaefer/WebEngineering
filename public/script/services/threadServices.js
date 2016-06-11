@@ -3,7 +3,7 @@ var threadServices = angular.module('threadServices', []);
 threadServices.factory('ThreadService', ['$http', function ($http) {
   var threadService = {};
 //category
-  threadService.getAllCategorys = function () {
+  threadService.getAllCategories = function () {
     return $http.get('/categorylist').then(function successCallback(response) {
       return response.data;
     },function errorCallback(response){

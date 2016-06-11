@@ -12,6 +12,7 @@
 {
 	"title":	"Hilfe Katze kaputt",
 	"author":	"Hans Peter"
+	"email":	"hp@t-online.de",
 	"id": 		"1",
 	"content":	"liegt nur noch rum, was kann ich tun?",
 	"date":		"01.05.2016",
@@ -23,6 +24,7 @@
 ```JSON
 {
 	"author":	"Hans Dieter"
+	"email":	"hd@t-online.de",
 	"id": 		"2",
 	"threadId":	"1",
 	"content":	"Wasser drauf!",

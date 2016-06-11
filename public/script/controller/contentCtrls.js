@@ -2,17 +2,53 @@ var contentCtrls = angular.module('contentCtrls', []);
 
 contentCtrls.controller('dashboardCtrl', ['$scope', 'ThreadService', function($scope, ThreadService) {
   
-  var allThreads = function(){
-    ThreadService.getAllThreads().then(function (data) {
-      $scope.allThreads = data;
+  var allCategories = function(){
+    ThreadService.getAllCategories().then(function (data) {
+      $scope.allCategories = data;
     });
   }
+
+  $scope.newCategory = function() {
+    ThreadService.postNewCategory ({
+      'author': this.author,
+      'title': this.title,
+      'content': this.content
+    });
+    allCategories();
+  };
+
+  $scope.deleteCategory = function(categoryId) {
+    ThreadService.deleteCategory(categoryId);
+    allCategories();
+  };
+
+  $scope.updateCategory = function() {
+    console.log('To Be implemented')
+  };
+
+  allCategories();
+}]);
+
+contentCtrls.controller('categoryCtrl', ['$scope', 'ThreadService', function($scope, ThreadService) {
+
+  var allThreads = function() {
+    ThreadService.getAllThreads().then(function (data) {
+      var threads = [];
+      for (thread in data) {
+        if (data[thread].categoryId === $scope.current.categoryId) {
+          threads.push(data[thread]);
+        }
+      }
+      $scope.categoryThreads = threads;
+    });
+  };
 
   $scope.newThread = function() {
     ThreadService.postNewThread ({
       'author': this.author,
       'title': this.title,
-      'content': this.content
+      'content': this.content,
+      'categoryId': $scope.current.categoryId
     });
     allThreads();
   };
