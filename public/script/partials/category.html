@@ -22,16 +22,15 @@
         </div>
     </header>
     <div ng-repeat="Thread in categoryThreads" class="thread">
-        <a ui-sref="thread({categoryId: current.categoryId, threadId: Thread._id})">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <h3 class="panel-title">{{Thread.title}}<span class="badge"> {{Thread.comments}}</span></h3>
-
-                </div>
-                <div class="panel-body">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <button type="button" class="close" ng-click="document.getElementById('usrname').setAttribute('value','{{Comment._id}}'); document.getElementById('cnt').value = Comment.content" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-pencil"></span></button>
+                <h3 class="panel-title">{{Thread.title}}&nbsp;<span class="badge">{{Thread.comments}}</span></h3>
+            </div>
+            <div class="panel-body">
+                <a ui-sref="thread({categoryId: current.categoryId, threadId: Thread._id})">
                     <div class="row">
                         <div class="col-sm-12 hidden-xs">
-                            <button type="button" class="close" ng-click="document.getElementById('usrname').setAttribute('value','{{Comment._id}}'); document.getElementById('cnt').value = Comment.content" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-pencil"></span></button>
                             <p>{{Thread.content}}</p>
                         </div>
                     </div>
@@ -40,15 +39,17 @@
                             <p>Author: {{Thread.author}}</p>
                         </div>
                         <div class="col-sm-3 hidden-xs">
-                            <p>{{Thread.email}}</p>
+                            <span ng-if="Comment.email !== undefined">
+                                Email: {{Thread.email}}
+                            </span>
                         </div>
                         <div class="col-sm-6 hidden-xs">
-                            <p>Time: {{Thread.dateCreated}}</p>
+                            <p>Time: {{Thread.dateCreated|date:'dd.MM.yyyy HH:mm'}}</p>
                         </div>
                     </div>
-                </div>
+                </a>
             </div>
-        </a>
+        </div>
     </div>
 </div>
 

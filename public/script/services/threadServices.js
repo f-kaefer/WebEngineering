@@ -33,7 +33,6 @@ threadServices.factory('ThreadService', ['$http', function ($http) {
   //threads
   threadService.getAllThreads = function () {
     return $http.get('/threadlist').then(function successCallback(response) {
-      console.log(response.data);
       return response.data;
     }, function errorCallback(response) {
 

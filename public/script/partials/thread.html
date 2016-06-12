@@ -32,11 +32,16 @@
                 </div>
                 <div class="panel-footer">
                     <div class="row">
-                        <div class="col-xs-6">
-                            {{Comment.author}}
+                        <div class="col-xs-4">
+                            Author: {{Comment.author}}
                         </div>
-                        <div class="col-xs-6">
-                            {{Comment.email}}
+                        <div class="col-xs-4">
+                            <span ng-if="Comment.email !== undefined">
+                                Email: {{Comment.email}}
+                            </span>
+                        </div>
+                        <div class="col-xs-4">
+                            {{Comment.dateCreated|date:'dd.MM.yyyy HH:mm'}}
                         </div>
                     </div>
                 </div>

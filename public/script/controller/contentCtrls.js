@@ -20,6 +20,10 @@ contentCtrls.controller('dashboardCtrl', ['$scope', 'ThreadService', function ($
   $scope.updateCategory = function () {
     console.log('To Be implemented');
   };
+  
+  $scope.editCategory(category) {
+    
+  };
 
   allCategories();
 },
