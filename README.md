@@ -3,7 +3,7 @@
 {
 	"title":	"Hilfe Katze kaputt",
 	"id": 		"1",
-	"date":		"01.05.2016",
+	"dateCreated":	"1465640332",
 	"threads":	"1"
 }
 ```
@@ -12,9 +12,10 @@
 {
 	"title":	"Hilfe Katze kaputt",
 	"author":	"Hans Peter"
+	"email":	"hp@t-online.de",
 	"id": 		"1",
 	"content":	"liegt nur noch rum, was kann ich tun?",
-	"date":		"01.05.2016",
+	"dateCreated":	"1465640332",
 	"comments":	"1"
 	"categoryId":	"12345"
 }
@@ -23,8 +24,9 @@
 ```JSON
 {
 	"author":	"Hans Dieter"
+	"email":	"hd@t-online.de",
 	"id": 		"2",
 	"threadId":	"1",
 	"content":	"Wasser drauf!",
-	"date":		"02.05.2016",
+	"dateCreated":	"1465640332",
 }
