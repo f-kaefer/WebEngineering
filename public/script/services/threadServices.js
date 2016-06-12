@@ -23,10 +23,6 @@ threadServices.factory('ThreadService', ['$http', function ($http) {
     $http.post('/category', data);
   };
 
-  threadService.deleteCategory = function (categoryId) {
-    return $http.delete('/category/' + categoryId);
-  };
-
   threadService.updateCategory = function (categoryId, data) {
     $http.put('/category/' + categoryId, data);
   };
@@ -53,10 +49,6 @@ threadServices.factory('ThreadService', ['$http', function ($http) {
     $http.post('/thread', data);
   };
 
-  threadService.deleteThread = function (threadId) {
-    return $http.delete('/thread/' + threadId);
-  };
-
   threadService.updateThread = function (threadId, data) {
     $http.put('/thread/' + threadId, data);
   };
@@ -71,10 +63,6 @@ threadServices.factory('ThreadService', ['$http', function ($http) {
 
   threadService.postNewComment = function (data) {
     $http.post('/comment', data);
-  };
-
-  threadService.deleteComment = function (commentId) {
-    return $http.delete('/comment/' + commentId);
   };
 
   threadService.updateComment = function (commentId, data) {
