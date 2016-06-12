@@ -17,15 +17,26 @@ contentCtrls.controller('dashboardCtrl', ['$scope', 'ThreadService', function ($
     allCategories();
   };
 
-  $scope.updateCategory = function () {
-    console.log('To Be implemented');
-  };
-  
-  $scope.editCategory(category) {
-    
+  $scope.updateCategory = function (category) {
+    ThreadService.updateCategory(category._id, category);
   };
 
+  $scope.editCategory = null;
+  
+  $scope.setEditCategory = function (category) {
+    $scope.editCategory = category;
+    $('#title').value = category.title;
+  };
+
+  $scope.categoryModal = function () {
+    if (editCategory === null) {
+      $scope.newCategory();
+    } else {
+      updateCategory(editCategory);
+    }
+  };
   allCategories();
+
 },
 ]);
 
@@ -56,8 +67,8 @@ contentCtrls.controller('categoryCtrl', ['$scope', 'ThreadService', function ($s
     allThreads();
   };
 
-  $scope.updateThread = function () {
-    console.log('To Be implemented');
+  $scope.updateThread = function (thread) {
+    ThreadService.updateThread(thread._id, thread);
   };
 
   allThreads();
@@ -89,8 +100,8 @@ contentCtrls.controller('threadCtrl', ['$scope', 'ThreadService', function ($sco
     allComments();
   };
 
-  $scope.updateComment = function () {
-    console.log('To Be implemented');
+  $scope.updateComment = function (comment) {
+    ThreadService.updateComment(comment._id, comment);
   };
 
   allComments();

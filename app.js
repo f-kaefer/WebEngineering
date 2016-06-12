@@ -245,7 +245,7 @@ app.post('/thread', function (req, res) {
   var newThread = new Thread({
     title: req.body.title,
     content: req.body.content,
-    email: req.body.content,
+    email: req.body.email,
     categoryId: req.body.categoryId,
     author: req.body.author,
     dateCreated: Date.now(),

@@ -14,7 +14,7 @@
     <div ng-repeat="Category in allCategories" class="category">
         <div class="panel panel-primary">
             <div class="panel-heading">
-                <button type="button" data-toggle="modal" data-target="#myModal" class="close" ng-click="editCategory(Category)"><span class="glyphicon glyphicon-pencil"></span></button>
+                <button type="button" data-toggle="modal" data-target="#myModal" class="close" ng-click="setEditCategory(Category)"><span class="glyphicon glyphicon-pencil"></span></button>
                 <h3 class="panel-title">{{Category.title}}&nbsp;<span class="badge">{{Category.threads}}</span></h3>
             </div>
             <div class="panel-body">
