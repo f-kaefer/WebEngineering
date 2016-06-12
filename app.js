@@ -45,11 +45,10 @@ var categorySchema = mongoose.Schema({
 
 var threadSchema = mongoose.Schema({
   title: { type: String, required: true },
-  author: { type: String, required: true },// jscs:ignore
+  author: { type: String, required: true },
   email: { type: String, required: false },
   categoryId: { type: String, required: true },
-
-  //content: { type: String, required: true },
+  content: { type: String, required: true },
   dateCreated: Date,
   comments: { default: 0, type: Number, required: false },
 });
