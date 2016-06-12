@@ -36,9 +36,7 @@
                             Author: {{Comment.author}}
                         </div>
                         <div class="col-xs-4">
-                            <span ng-if="Comment.email !== undefined">
-                                Email: {{Comment.email}}
-                            </span>
+                            {{Comment.email}}
                         </div>
                         <div class="col-xs-4">
                             {{Comment.dateCreated|date:'dd.MM.yyyy HH:mm'}}
