@@ -1,4 +1,4 @@
-var app = angular.module('forumApp', ['footerCtrls', 'contentCtrls', 'threadServices', 'ui.router']);
+var app = angular.module('forumApp', ['contentCtrls', 'threadServices', 'ui.router']);
 
 app.config(function ($stateProvider, $urlRouterProvider) {
   //
@@ -14,9 +14,9 @@ app.config(function ($stateProvider, $urlRouterProvider) {
       views: {
         content: {
           templateUrl: '/script/partials/dashboard.html',
-          controller:  'dashboardCtrl',
-        },
-      },
+          controller:  'dashboardCtrl'
+        }
+      }
     })
       .state('category', {
         url: '/category/{categoryId:[^/]*}',
@@ -26,9 +26,9 @@ app.config(function ($stateProvider, $urlRouterProvider) {
         views: {
           content: {
             templateUrl: '/script/partials/category.html',
-            controller:  'categoryCtrl',
-          },
-        },
+            controller:  'categoryCtrl'
+          }
+        }
       })
     .state('thread', {
       url: '/category/{categoryId:[^/]*}/thread/{threadId:[^/]*}',
@@ -39,9 +39,9 @@ app.config(function ($stateProvider, $urlRouterProvider) {
       views: {
         content: {
           templateUrl: '/script/partials/thread.html',
-          controller:  'threadCtrl',
-        },
-      },
+          controller:  'threadCtrl'
+        }
+      }
     });
 })
 .controller('appCtrl', ['$scope', '$location', 'ThreadService', '$stateParams', function($scope, $location, ThreadService, $stateParams) {

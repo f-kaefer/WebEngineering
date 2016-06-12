@@ -6,22 +6,18 @@ contentCtrls.controller('dashboardCtrl', ['$scope', 'ThreadService', function($s
     ThreadService.getAllCategories().then(function (data) {
       $scope.allCategories = data;
     });
-  }
+  };
 
   $scope.newCategory = function() {
     ThreadService.postNewCategory ({
       'author': this.author,
+      'email': this.email,
       'title': this.title,
       'content': this.content
     });
     allCategories();
   };
-
-  $scope.deleteCategory = function(categoryId) {
-    ThreadService.deleteCategory(categoryId);
-    allCategories();
-  };
-
+  
   $scope.updateCategory = function() {
     console.log('To Be implemented')
   };
@@ -34,9 +30,11 @@ contentCtrls.controller('categoryCtrl', ['$scope', 'ThreadService', function($sc
   var allThreads = function() {
     ThreadService.getAllThreads().then(function (data) {
       var threads = [];
-      for (thread in data) {
-        if (data[thread].categoryId === $scope.current.categoryId) {
-          threads.push(data[thread]);
+      for (var thread in data) {
+        if (data.hasOwnProperty(thread)) {
+          if (data[thread].categoryId === $scope.current.categoryId) {
+            threads.push(data[thread]);
+          }
         }
       }
       $scope.categoryThreads = threads;
@@ -46,15 +44,11 @@ contentCtrls.controller('categoryCtrl', ['$scope', 'ThreadService', function($sc
   $scope.newThread = function() {
     ThreadService.postNewThread ({
       'author': this.author,
+      'email': this.email,
       'title': this.title,
       'content': this.content,
       'categoryId': $scope.current.categoryId
     });
-    allThreads();
-  };
-
-  $scope.deleteThread = function(threadId) {
-    ThreadService.deleteThread(threadId);
     allThreads();
   };
 
@@ -69,9 +63,11 @@ contentCtrls.controller('threadCtrl', ['$scope', 'ThreadService', function($scop
   var allComments = function() {
     ThreadService.getAllComments().then(function (data) {
       var comments = [];
-      for (comment in data) {
-        if (data[comment].threadId === $scope.current.threadId) {
-          comments.push(data[comment]);
+      for (var comment in data) {
+        if (data.hasOwnProperty(comment)) {
+          if (data[comment].threadId === $scope.current.threadId) {
+            comments.push(data[comment]);
+          }
         }
       }
       $scope.threadComments = comments;
@@ -87,12 +83,7 @@ contentCtrls.controller('threadCtrl', ['$scope', 'ThreadService', function($scop
     });
     allComments();
   };
-
-  $scope.deleteComment = function(commentId) {
-    ThreadService.deleteComment(commentId);
-    allComments();
-  };
-
+  
   $scope.updateComment = function() {
     console.log('To Be implemented')
   };
