@@ -1,12 +1,7 @@
 var app = angular.module('forumApp', ['contentCtrls', 'threadServices', 'ui.router']);
 
 app.config(function ($stateProvider, $urlRouterProvider) {
-  //
-  // For any unmatched url, redirect to /state1
   $urlRouterProvider.otherwise('/dashboard');
-
-  //
-  // Now set up the states
 
   $stateProvider
     .state('dashboard', {
@@ -14,67 +9,71 @@ app.config(function ($stateProvider, $urlRouterProvider) {
       views: {
         content: {
           templateUrl: '/script/partials/dashboard.html',
-          controller:  'dashboardCtrl'
-        }
-      }
+          controller:  'dashboardCtrl',
+        },
+      },
     })
       .state('category', {
         url: '/category/{categoryId:[^/]*}',
-        controller: function($stateParams){
+        controller: function ($stateParams) {
           $stateParams.categoryId
         },
+
         views: {
           content: {
             templateUrl: '/script/partials/category.html',
-            controller:  'categoryCtrl'
-          }
-        }
+            controller:  'categoryCtrl',
+          },
+        },
       })
     .state('thread', {
       url: '/category/{categoryId:[^/]*}/thread/{threadId:[^/]*}',
-      controller: function($stateParams){
+      controller: function ($stateParams) {
         $stateParams.categoryId
         $stateParams.threadId
       },
+
       views: {
         content: {
           templateUrl: '/script/partials/thread.html',
-          controller:  'threadCtrl'
-        }
-      }
+          controller:  'threadCtrl',
+        },
+      },
     });
 })
-.controller('appCtrl', ['$scope', '$location', 'ThreadService', '$stateParams', function($scope, $location, ThreadService, $stateParams) {
+.controller('appCtrl', ['$scope', '$location', 'ThreadService', '$stateParams', function ($scope, $location, ThreadService, $stateParams) { //jscs:ignore
 
   $scope.$on('$stateChangeSuccess', function () {
     var threadTest = /\/thread\/.+/i;
     var categoryTest = /\/category\/.+/i;
-    
+
     var url = $location.path();
-    if (url == '/dashboard') {
-      $scope.current = { 'state': 'dashboard'};
+    if (url === '/dashboard') {
+      $scope.current = { state: 'dashboard' };
     } else if (categoryTest.test(url)) {
       ThreadService.getCategory($stateParams.categoryId).then(function (category) {
         $scope.current = {
-          'state': 'category',
-          'categoryId': $stateParams.categoryId,
-          'category': category
+          state: 'category',
+          categoryId: $stateParams.categoryId,
+          category: category,
         };
       });
-      if(threadTest.test(url)) {
-        ThreadService.getThread($stateParams.threadId).then(function(thread) {
+
+      if (threadTest.test(url)) {
+        ThreadService.getThread($stateParams.threadId).then(function (thread) {
           $scope.current = {
-            'state': 'thread',
-            'categoryId': $stateParams.categoryId,
-            'category': $scope.current.category,
-            'threadId': $stateParams.threadId,
-            'thread': thread
+            state: 'thread',
+            categoryId: $stateParams.categoryId,
+            category: $scope.current.category,
+            threadId: $stateParams.threadId,
+            thread: thread,
           };
         });
       }
     } else {
-      console.log("not a valid state, how did you get here?");
-      $location.url("/dashboard")
+      console.log('not a valid state, how did you get here?');
+      $location.url('/dashboard');
     }
   });
-}]);
+},
+]);

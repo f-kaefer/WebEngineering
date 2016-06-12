@@ -15,6 +15,9 @@ module.exports = function (grunt) {
       src: [
         'app.js',
         'services/**',
+        'public/script/*',
+        'public/script/controller/*',
+        'public/script/services/*',
       ],
       gruntfile: [
         'Gruntfile.js',
@@ -28,6 +31,9 @@ module.exports = function (grunt) {
       src: [
         'app.js',
         'services/**',
+        'public/script/*',
+        'public/script/controller/*',
+        'public/script/services/*',
       ],
       gruntfile: [
         'Gruntfile.js',

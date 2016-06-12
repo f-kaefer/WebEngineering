@@ -31,7 +31,14 @@
                     {{Comment.content}}
                 </div>
                 <div class="panel-footer">
-                    {{Comment.author}}
+                    <div class="row">
+                        <div class="col-xs-6">
+                            {{Comment.author}}
+                        </div>
+                        <div class="col-xs-6">
+                            {{Comment.email}}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -55,7 +62,7 @@
                     </div>
                     <div class="form-group">
                         <label for="email"><span class="glyphicon glyphicon-envelope"></span> E-Mail</label>
-                        <input ng-model="email" type="text" class="form-control" id="email" placeholder="Enter your E-Mail">
+                        <input ng-model="email" type="email" class="form-control" id="email" placeholder="Enter your E-Mail">
                     </div>
                     <div class="form-group">
                         <label for="cnt"><span class="glyphicon glyphicon-book"></span> Content</label>

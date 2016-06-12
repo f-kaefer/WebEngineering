@@ -2,11 +2,13 @@ var threadServices = angular.module('threadServices', []);
 
 threadServices.factory('ThreadService', ['$http', function ($http) {
   var threadService = {};
-//category
+
+  //category
   threadService.getAllCategories = function () {
     return $http.get('/categorylist').then(function successCallback(response) {
       return response.data;
-    },function errorCallback(response){
+    }, function errorCallback(response) {
+
       return null;
     });
   };
@@ -14,7 +16,8 @@ threadServices.factory('ThreadService', ['$http', function ($http) {
   threadService.getCategory = function (categoryId) {
     return $http.get('/category/' + categoryId).then(function successCallback(response) {
       return response.data[0];
-    },function errorCallback(response){
+    }, function errorCallback(response) {
+
       return null;
     });
   };
@@ -27,12 +30,13 @@ threadServices.factory('ThreadService', ['$http', function ($http) {
     $http.put('/category/' + categoryId, data);
   };
 
-
-//threads
+  //threads
   threadService.getAllThreads = function () {
     return $http.get('/threadlist').then(function successCallback(response) {
+      console.log(response.data);
       return response.data;
-    },function errorCallback(response){
+    }, function errorCallback(response) {
+
       return null;
     });
   };
@@ -40,11 +44,12 @@ threadServices.factory('ThreadService', ['$http', function ($http) {
   threadService.getThread = function (threadId) {
     return $http.get('/thread/' + threadId).then(function successCallback(response) {
       return response.data[0];
-    },function errorCallback(response){
+    }, function errorCallback(response) {
+
       return null;
     });
   };
-  
+
   threadService.postNewThread = function (data) {
     $http.post('/thread', data);
   };
@@ -52,11 +57,13 @@ threadServices.factory('ThreadService', ['$http', function ($http) {
   threadService.updateThread = function (threadId, data) {
     $http.put('/thread/' + threadId, data);
   };
-//comments
+
+  //comments
   threadService.getAllComments = function () {
     return $http.get('/commentlist').then(function successCallback(response) {
       return response.data;
-    },function errorCallback(response){
+    }, function errorCallback(response) {
+
       return null;
     });
   };
@@ -70,4 +77,5 @@ threadServices.factory('ThreadService', ['$http', function ($http) {
   };
 
   return threadService;
-}]);
+},
+]);
