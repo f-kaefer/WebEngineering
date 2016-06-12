@@ -17,21 +17,52 @@ mongoose.connection.on('error', function (err) {
   console.log(err);
 });
 
+/**
+ * Category Schema
+ * @constructor
+ * @param {string} title - the name of the category
+ * @param {date} dateCreated - date when the category was created
+ * @param {number} threads - amount of threads the category contains
+ */
+
 var categorySchema = mongoose.Schema({
   title: { type: String, required: true },
   dateCreated: Date,
   threads: { default: 0, type: Number, required: false },
 });
 
+/**
+ * Thread Schema
+ * @constructor
+ * @param {string} title - the name of the category
+ * @param {string} author - the name of the author of the thread
+ * @param {string} email - (OPTIONAL) the email address of the author
+ * @param {string} categoryId - the ID of the category the thread has been created in
+ * @param {string} content - the content of the thread
+ * @param {date} dateCreated - the date when the thread has been created
+ * @param {number} comments - the amount of comments which has been created in this thread
+ */
+
 var threadSchema = mongoose.Schema({
   title: { type: String, required: true },
   author: { type: String, required: true },// jscs:ignore
   email: { type: String, required: false },
   categoryId: { type: String, required: true },
-  content: { type: String, required: true },
+
+  //content: { type: String, required: true },
   dateCreated: Date,
   comments: { default: 0, type: Number, required: false },
 });
+
+/**
+ * Comments Schema
+ * @constructor
+ * @param {string} author - the name of the author of the comment
+ * @param {string} email - (OPTIONAL) the email address of the author
+ * @param {string} content - the content of the thread
+ * @param {string} thread - the ID of the thread the thread has been created in
+ * @param {date} dateCreated - the date when the thread has been created
+ */
 
 var commentSchema = mongoose.Schema({
   author: { type: String, required: true },
@@ -45,10 +76,12 @@ var Category = mongoose.model('Category', categorySchema);
 var Thread = mongoose.model('Thread', threadSchema);
 var Comment = mongoose.model('Comment', commentSchema);
 
+/**
+ * app
+ * @constructor
+ */
 var app = express();
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
@@ -57,8 +90,16 @@ app.use(express.static(path.join(__dirname, 'public')));
  ****REST-API***
  ***************/
 
-//Category
+//jscs:disable
+/**
+ * post category to create a new category
+ * @function post newCategory
+ * @memberof app
+ * @return {JSON} JSON with statusCode, statusMessage, category object
+ */
+//jscs:enable
 
+//Category
 //post newCategory
 app.post('/category', function (req, res) {
   var newCategory = new Category({
@@ -69,7 +110,6 @@ app.post('/category', function (req, res) {
   });
   console.log('TRIED TO POST DATA');
 
-  //Save object to database, error or success
   newCategory.save(function (err, newCategory) {
     if (err) {
       res.statusCode = 500;
@@ -82,6 +122,16 @@ app.post('/category', function (req, res) {
     }
   });
 });
+
+//jscs:disable
+/**
+ * put update a category
+ * @function put updateCategory
+ * @memberof app
+ * @param {string} id - id of the category which should be updated
+ * @return {JSON} JSON object with the updated category object
+ */
+//jscs:enable
 
 //update Category
 app.put('/category/:id', function (req, res) {
@@ -102,6 +152,15 @@ app.put('/category/:id', function (req, res) {
   });
 });
 
+//jscs:disable
+/**
+ * get all categories
+ * @function get allCategories
+ * @memberof app
+ * @return {JSON} JSON object with statusCode, statusMessage and the all category objects
+ */
+//jscs:enable
+
 //getAllCategories
 app.get('/categorylist', function (req, res) {
   Category.find({}, function (err, category) {
@@ -116,6 +175,16 @@ app.get('/categorylist', function (req, res) {
     }
   });
 });
+
+//jscs:disable
+/**
+ * get specific category
+ * @function get specificCategory
+ * @memberof app
+ * @param {string} id - id of the category which should be found
+ * @return {JSON} JSON object with statusCode, statusMessage and the category object
+ */
+//jscs:enable
 
 //GET specificCategory
 app.get('/category/:id', function (req, res) {
@@ -132,6 +201,16 @@ app.get('/category/:id', function (req, res) {
   });
 });
 
+//jscs:disable
+/**
+ * delete specific category
+ * @function delete specificCategory
+ * @memberof app
+ * @param {string} id - id of the category which should be deleted
+ * @return {JSON} JSON object with statusMessage
+ */
+//jscs:enable
+
 //delete category
 app.delete('/category/:id', function (req, res) {
   Category.findOneAndRemove({ _id: req.params.id }, function (err)  {
@@ -147,6 +226,15 @@ app.delete('/category/:id', function (req, res) {
 });
 
 //Thread
+
+//jscs:disable
+/**
+ * post newThread to create a new thread in a category
+ * @function post /thread
+ * @memberof app
+ * @return {JSON} JSON with statusCode, statusMessage, category object
+ */
+//jscs:enable
 
 //post newThread
 app.post('/thread', function (req, res) {
@@ -171,6 +259,7 @@ app.post('/thread', function (req, res) {
       res.send('err');
     }else {
 
+      //to display how many threads in a specific thread are an increment is added to the function
       Category.find({ _id: req.body.categoryId }, function (err, category) {
         if (err) {
           console.log(err);
@@ -179,7 +268,6 @@ app.post('/thread', function (req, res) {
           response.status = 'err';
           res.json(response);
         } else {
-          /* if no error occurs we try to update the found thread*/
           console.log('all data from database received');
           response.statusCode = 200;
           if (category === null) {
@@ -194,7 +282,7 @@ app.post('/thread', function (req, res) {
               if (err) {
                 console.log(err);
               } else {
-                console.log('successfully updated category');
+                console.log('successfully updated thread');
                 response.affected = affected;
                 res.json(response);
               }
@@ -205,6 +293,16 @@ app.post('/thread', function (req, res) {
     }
   });
 });
+
+//jscs:disable
+/**
+ * update a thread with new content
+ * @function put updateThread
+ * @memberof app
+ * @param {string} id - id of the thread which should be updated
+ * @return {JSON} JSON object with the updated thread object
+ */
+//jscs:enable
 
 //update Thread
 app.put('/thread/:id', function (req, res) {
@@ -225,6 +323,15 @@ app.put('/thread/:id', function (req, res) {
   });
 });
 
+//jscs:disable
+/**
+ * get all threads
+ * @function get allThreads
+ * @memberof app
+ * @return {JSON} JSON object with statusCode, statusMessage and the all thread objects
+ */
+//jscs:enable
+
 //getAllThreads
 app.get('/threadlist', function (req, res) {
   Thread.find({}, function (err, threads) {
@@ -239,6 +346,16 @@ app.get('/threadlist', function (req, res) {
     }
   });
 });
+
+//jscs:disable
+/**
+ * get specific thrad
+ * @function get specificThread
+ * @memberof app
+ * @param {string} id - id of the thread which should be found
+ * @return {JSON} JSON object with statusCode, statusMessage and the category object
+ */
+//jscs:enable
 
 //GET specificThread
 app.get('/thread/:id', function (req, res) {
@@ -255,10 +372,15 @@ app.get('/thread/:id', function (req, res) {
   });
 });
 
-/*threadSchema.pre('remove', function (next) {
-  Comment.remove({ thread_id: this._id }).exec();
-  next();
-});*/
+//jscs:disable
+/**
+ * delete a specific thread
+ * @function delete specificThread
+ * @memberof app
+ * @param {string} id - id of the thread which should be deleted
+ * @return {JSON} JSON object with statusMessage
+ */
+//jscs:enable
 
 //delete thread
 app.delete('/thread/:id', function (req, res) {
@@ -275,6 +397,14 @@ app.delete('/thread/:id', function (req, res) {
 
 //Comments
 
+//jscs:disable
+/**
+ * get all comments
+ * @function get allComments
+ * @memberof app
+ * @return {JSON} JSON object with statusCode, statusMessage and the all category objects
+ */
+
 //GET allComments
 app.get('/commentlist', function (req, res) {
   Comment.find({}, function (err, databaseResponseComments) {
@@ -284,11 +414,20 @@ app.get('/commentlist', function (req, res) {
       res.send('err');
     }else {
       res.statusCode = 200;
-      console.log('Successfully send all data');
+      console.log('Successfully sent all data');
       res.json(databaseResponseComments);
     }
   });
 });
+
+//jscs:disable
+/**
+ * get specific comment
+ * @function get specificComment
+ * @memberof app
+ * @return {JSON} JSON object with statusCode, statusMessage and the all category objects
+ */
+//(jscs:enable
 
 //GET specificComment
 app.get('/comment/:id', function (req, res) {
@@ -304,6 +443,16 @@ app.get('/comment/:id', function (req, res) {
     }
   });
 });
+
+//jscs:disable
+/**
+ * update a comment with new content
+ * @function put updateComment
+ * @memberof app
+ * @param {string} id - id of the comment which should be updated
+ * @return {JSON} JSON object with the updated thread object
+ */
+//jscs:enable
 
 //update comment
 app.put('/comment/:id', function (req, res) {
@@ -322,6 +471,15 @@ app.put('/comment/:id', function (req, res) {
   });
 });
 
+//jscs:disable
+/**
+ * post newComment to create a new comment in a thread
+ * @function post comment
+ * @memberof app
+ * @return {JSON} JSON with statusCode, statusMessage, category object
+ */
+//jscs:enable
+
 //post newComment
 app.post('/comment', function (req, res) {
   var newComment = new Comment({
@@ -334,7 +492,6 @@ app.post('/comment', function (req, res) {
   var response = {};
   var update = {};
 
-  //Save object to database, error or success
   newComment.save(function (err, newComment) {
     var response = {};
     if (err) {
@@ -343,6 +500,7 @@ app.post('/comment', function (req, res) {
       res.send('err');
     }else {
 
+      //implemented a funtion which increments the number of comments in a thread
       Thread.find({ _id: req.body.threadId }, function (err, thread) {
         if (err) {
           console.log(err);
@@ -377,6 +535,16 @@ app.post('/comment', function (req, res) {
   });
 });
 
+//jscs:disable
+/**
+ * delete a specific comment
+ * @function delete specificComment
+ * @memberof app
+ * @param {string} id - id of the comment which should be deleted
+ * @return {JSON} JSON object with statusMessage
+ */
+//jscs:enable
+
 //delete comment
 app.delete('/comment/:id', function (req, res) {
   Comment.findOneAndRemove({ _id: req.params.id }, function (err)  {
@@ -389,13 +557,14 @@ app.delete('/comment/:id', function (req, res) {
   });
 });
 
-// catch 404 and forward to error handler
+//404 error handler
 app.use(function (req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
   next(err);
 });
 
+//listener
 app.listen(6001, function () {
   console.log('server started on port 6001');
 });
