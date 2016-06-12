@@ -96,6 +96,7 @@ app.use(express.static(path.join(__dirname, 'public')));
  * @memberof app
  * @return {JSON} JSON with statusCode, statusMessage, category object
  */
+
 //jscs:enable
 
 //Category
@@ -130,6 +131,7 @@ app.post('/category', function (req, res) {
  * @param {string} id - id of the category which should be updated
  * @return {JSON} JSON object with the updated category object
  */
+
 //jscs:enable
 
 //update Category
@@ -153,11 +155,12 @@ app.put('/category/:id', function (req, res) {
 
 //jscs:disable
 /**
- * get all categories
+ * get all categories from the database
  * @function get allCategories
  * @memberof app
  * @return {JSON} JSON object with statusCode, statusMessage and the all category objects
  */
+
 //jscs:enable
 
 //getAllCategories
@@ -177,12 +180,13 @@ app.get('/categorylist', function (req, res) {
 
 //jscs:disable
 /**
- * get specific category
+ * get specific category from the database
  * @function get specificCategory
  * @memberof app
  * @param {string} id - id of the category which should be found
  * @return {JSON} JSON object with statusCode, statusMessage and the category object
  */
+
 //jscs:enable
 
 //GET specificCategory
@@ -208,6 +212,7 @@ app.get('/category/:id', function (req, res) {
  * @param {string} id - id of the category which should be deleted
  * @return {JSON} JSON object with statusMessage
  */
+
 //jscs:enable
 
 //delete category
@@ -233,6 +238,7 @@ app.delete('/category/:id', function (req, res) {
  * @memberof app
  * @return {JSON} JSON with statusCode, statusMessage, category object
  */
+
 //jscs:enable
 
 //post newThread
@@ -258,7 +264,12 @@ app.post('/thread', function (req, res) {
       res.send('err');
     }else {
 
-      //to display how many threads in a specific thread are an increment is added to the function
+      //jscs: disable
+      /*to display how many threads in a specific thread are an increment is added to the function
+      so each time a thread is created the counter of the corresponding category increments by one*/
+
+      //jscs:enable
+
       Category.find({ _id: req.body.categoryId }, function (err, category) {
         if (err) {
           console.log(err);
@@ -301,6 +312,7 @@ app.post('/thread', function (req, res) {
  * @param {string} id - id of the thread which should be updated
  * @return {JSON} JSON object with the updated thread object
  */
+
 //jscs:enable
 
 //update Thread
@@ -329,6 +341,7 @@ app.put('/thread/:id', function (req, res) {
  * @memberof app
  * @return {JSON} JSON object with statusCode, statusMessage and the all thread objects
  */
+
 //jscs:enable
 
 //getAllThreads
@@ -354,6 +367,7 @@ app.get('/threadlist', function (req, res) {
  * @param {string} id - id of the thread which should be found
  * @return {JSON} JSON object with statusCode, statusMessage and the category object
  */
+
 //jscs:enable
 
 //GET specificThread
@@ -379,6 +393,7 @@ app.get('/thread/:id', function (req, res) {
  * @param {string} id - id of the thread which should be deleted
  * @return {JSON} JSON object with statusMessage
  */
+
 //jscs:enable
 
 //delete thread
@@ -426,6 +441,7 @@ app.get('/commentlist', function (req, res) {
  * @memberof app
  * @return {JSON} JSON object with statusCode, statusMessage and the all category objects
  */
+
 //(jscs:enable
 
 //GET specificComment
@@ -451,6 +467,7 @@ app.get('/comment/:id', function (req, res) {
  * @param {string} id - id of the comment which should be updated
  * @return {JSON} JSON object with the updated thread object
  */
+
 //jscs:enable
 
 //update comment
@@ -477,6 +494,7 @@ app.put('/comment/:id', function (req, res) {
  * @memberof app
  * @return {JSON} JSON with statusCode, statusMessage, category object
  */
+
 //jscs:enable
 
 //post newComment
@@ -499,7 +517,11 @@ app.post('/comment', function (req, res) {
       res.send('err');
     }else {
 
-      //implemented a funtion which increments the number of comments in a thread
+      //jscs:disable
+      /*implemented a funtion which increments the number of comments in a thread
+        so each time a comment is created the counter of the corresponding thread increments by one */
+      //jscs:enable
+
       Thread.find({ _id: req.body.threadId }, function (err, thread) {
         if (err) {
           console.log(err);
@@ -542,6 +564,7 @@ app.post('/comment', function (req, res) {
  * @param {string} id - id of the comment which should be deleted
  * @return {JSON} JSON object with statusMessage
  */
+
 //jscs:enable
 
 //delete comment
