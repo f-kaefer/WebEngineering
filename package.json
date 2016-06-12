@@ -1,5 +1,6 @@
 {
   "name": "WebEngineering",
+  "author": " David Volz, Florian Käfer",
   "version": "0.0.0",
   "private": true,
   "scripts": {
