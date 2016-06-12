@@ -108,7 +108,6 @@ app.post('/category', function (req, res) {
     dateCreated: Date.now(),
     comments: req.body.comments,
   });
-  console.log('TRIED TO POST DATA');
 
   newCategory.save(function (err, newCategory) {
     if (err) {
@@ -246,12 +245,12 @@ app.post('/thread', function (req, res) {
   var newThread = new Thread({
     title: req.body.title,
     content: req.body.content,
+    email: req.body.content,
     categoryId: req.body.categoryId,
     author: req.body.author,
     dateCreated: Date.now(),
     comments: req.body.comments,
   });
-  console.log('TRIED TO POST DATA');
 
   var update = {};
   var response = {};
@@ -320,6 +319,7 @@ app.put('/thread/:id', function (req, res) {
   return Thread.findById(req.params.id, function (err, thread) {
     thread.title = req.body.title;
     thread.content = req.body.content;
+    thread.email = req.body.email;
     thread.dateCreated = Date.now();
     thread.comments = req.body.comments;
     return thread.save(function (err) {
@@ -474,6 +474,7 @@ app.get('/comment/:id', function (req, res) {
 app.put('/comment/:id', function (req, res) {
   return Comment.findById(req.params.id, function (err, comment) {
     comment.content = req.body.content;
+    comment.email = req.body.email;
     comment.dateCreated = Date.now();
     return comment.save(function (err) {
       if (!err) {
@@ -501,6 +502,7 @@ app.put('/comment/:id', function (req, res) {
 app.post('/comment', function (req, res) {
   var newComment = new Comment({
     author: req.body.author,
+    email: req.body.email,
     threadId: req.body.threadId,
     content: req.body.content,
     dateCreated: Date.now(),
@@ -520,6 +522,7 @@ app.post('/comment', function (req, res) {
       //jscs:disable
       /*implemented a funtion which increments the number of comments in a thread
         so each time a comment is created the counter of the corresponding thread increments by one */
+
       //jscs:enable
 
       Thread.find({ _id: req.body.threadId }, function (err, thread) {
